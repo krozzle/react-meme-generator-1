@@ -2,39 +2,53 @@ import React, { useState } from 'react';
 import { LinksArray } from './Links';
 console.log(LinksArray.length);
 
-function App() {
-  let [picture, setPicture] = useState(LinksArray);
+function Dope(props) {
+  return <h1>Helloe {props.name}</h1>;
+}
+function Inputs() {
+  const [firstInput, setfirstInput] = useState('');
+  const [secondInput, setsecondInput] = useState('');
+  return (
+    <>
+      <input
+        type="text"
+        value={firstInput}
+        onChange={(e) => setfirstInput(e.target.value)}
+      />
+      <input
+        type="text"
+        value={secondInput}
+        onChange={(e) => setsecondInput(e.target.value)}
+      />
+    </>
+  );
+}
+
+function PictureSwitcher() {
+  let [picture, setPicture] = useState(
+    'https://api.memegen.link/images/elf/_/YOU_SIT_ON_A_THRONE_OF_LIES.png',
+  );
   let [number, setNumber] = useState(0);
 
-  function addPic() {
+  function plusPic() {
     setPicture(LinksArray[`${number}`].url);
     setNumber(number + 1);
   }
-
-  //picture = picture.split('/').splice(0, 5).join('/') + '.png';
+  function minusPic() {
+    setPicture(LinksArray[`${number}`].url);
+    setNumber(number - 1);
+  }
   return (
     <div>
       <p>
         <img src={picture} alt="yes pls" />
-        <button onClick={() => addPic()}>+</button>
-        <button onClick={() => addPic()}>-</button>
+        <button onClick={() => plusPic()}>+</button>
+        <button onClick={() => minusPic()}>-</button>
       </p>
+      <Inputs />;
+      <Dope name="hans" />
     </div>
   );
 }
 
-// function App() {
-//   const [picture, setPicture] = useState();
-//   console.log(setPicture);
-//   return (
-//     <div>
-//       <p>You clicked {picture} times</p>
-//       <button onClick={() => setPicture(LinksArray[0])}>+</button>
-//       <button onClick={() => setPicture(LinksArray[1])}>-</button>
-//       <br />
-//       <img src={picture} alt="yes pls" />
-//     </div>
-//   );
-// }
-
-export default App;
+export default PictureSwitcher;

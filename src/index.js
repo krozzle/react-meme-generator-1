@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import PictureSwitcher from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <PictureSwitcher />
   </React.StrictMode>,
   document.getElementById('root'),
 );
