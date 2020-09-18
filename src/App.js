@@ -1,53 +1,57 @@
-import React, { useState } from 'react';
-import { LinksArray } from './Links';
-console.log(LinksArray.length);
+import React, { useState, useEffect } from 'react';
+import getApiAndTransform from './links';
+import { Download } from './download';
+import { Button, InputFields } from './button_inputs';
 
-function Dope(props) {
-  return <h1>Helloe {props.name}</h1>;
-}
-function Inputs() {
-  const [firstInput, setfirstInput] = useState('');
-  const [secondInput, setsecondInput] = useState('');
-  return (
-    <>
-      <input
-        type="text"
-        value={firstInput}
-        onChange={(e) => setfirstInput(e.target.value)}
-      />
-      <input
-        type="text"
-        value={secondInput}
-        onChange={(e) => setsecondInput(e.target.value)}
-      />
-    </>
-  );
+function App() {
+  const [data, setData] = useState({ hits: [] });
+
+  useEffect(async () => {
+    const result = await getApiAndTransform();
+
+    setData(result.data);
+  }, []);
 }
 
-function PictureSwitcher() {
+export function PictureSwitcher(props) {
   let [picture, setPicture] = useState(
-    'https://api.memegen.link/images/elf/_/YOU_SIT_ON_A_THRONE_OF_LIES.png',
+    'https://api.memegen.link/images/success',
   );
   let [number, setNumber] = useState(0);
+  const [firstInput, setfirstInput] = useState('');
+  const [secondInput, setsecondInput] = useState('');
 
   function plusPic() {
-    setPicture(LinksArray[`${number}`].url);
+    setPicture(Array[`${number}`]);
     setNumber(number + 1);
   }
   function minusPic() {
-    setPicture(LinksArray[`${number}`].url);
+    setPicture(Array[`${number}`]);
     setNumber(number - 1);
   }
+  let finishedLink = picture + '/' + firstInput + '/' + secondInput + '.png';
+  console.log(finishedLink);
+
   return (
-    <div>
-      <p>
-        <img src={picture} alt="yes pls" />
-        <button onClick={() => plusPic()}>+</button>
-        <button onClick={() => minusPic()}>-</button>
-      </p>
-      <Inputs />;
-      <Dope name="hans" />
-    </div>
+    <>
+      <img src={finishedLink} alt="yes pls" />
+      <h1>
+        Picture {number} out of {Array.length}
+      </h1>
+      <div>
+        <Button onClick={() => plusPic()} Sign={'+'} />
+        <Button onClick={() => minusPic()} Sign={'-'} />
+        <InputFields
+          value={firstInput}
+          onChange={(e) => setfirstInput(e.target.value)}
+        />
+        <InputFields
+          value={secondInput}
+          onChange={(e) => setsecondInput(e.target.value)}
+        />
+      </div>
+      <Download url={finishedLink} />
+    </>
   );
 }
 
