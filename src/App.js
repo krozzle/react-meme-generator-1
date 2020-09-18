@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import getApiAndTransform from './links';
+import React, { useState } from 'react';
+import { LinksArray } from './links';
 import { Download } from './download';
 import { Button, InputFields } from './button_inputs';
 
-function App() {
-  const [data, setData] = useState({ hits: [] });
+let Array = [];
 
-  useEffect(async () => {
-    const result = await getApiAndTransform();
-
-    setData(result.data);
-  }, []);
+for (let i = 0; i < LinksArray.length; i++) {
+  Array.push(LinksArray[i].url.split('/').splice(0, 5).join('/'));
 }
-
 export function PictureSwitcher(props) {
   let [picture, setPicture] = useState(
     'https://api.memegen.link/images/success',
