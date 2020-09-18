@@ -3,35 +3,38 @@ import { LinksArray } from './links';
 import { Download } from './download';
 import { Button, InputFields } from './button_inputs';
 
-let Array = [];
+let array = [];
 
 for (let i = 0; i < LinksArray.length; i++) {
-  Array.push(LinksArray[i].url.split('/').splice(0, 5).join('/'));
+  array.push(LinksArray[i].url.split('/').splice(0, 5).join('/'));
 }
 export function PictureSwitcher(props) {
-  let [picture, setPicture] = useState(
-    'https://api.memegen.link/images/success',
-  );
   let [number, setNumber] = useState(0);
   const [firstInput, setfirstInput] = useState('');
   const [secondInput, setsecondInput] = useState('');
 
   function plusPic() {
-    setPicture(Array[`${number}`]);
     setNumber(number + 1);
+    setfirstInput('');
   }
   function minusPic() {
-    setPicture(Array[`${number}`]);
     setNumber(number - 1);
   }
-  let finishedLink = picture + '/' + firstInput + '/' + secondInput + '.png';
-  console.log(finishedLink);
+  if (number < 0) {
+    number = 137;
+  }
+  if (number > 137) {
+    number = 0;
+  }
+  console.log(number);
+  let finishedLink =
+    array[number] + '/' + firstInput + '/' + secondInput + '.png';
 
   return (
     <>
       <img src={finishedLink} alt="yes pls" />
       <h1>
-        Picture {number} out of {Array.length}
+        Picture {number} out of {array.length}
       </h1>
       <div>
         <Button onClick={() => plusPic()} Sign={'+'} />
