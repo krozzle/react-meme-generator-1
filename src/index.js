@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PictureSwitcher from './App';
+import PictureSwitcher from './app';
 
 ReactDOM.render(
   <React.StrictMode>
